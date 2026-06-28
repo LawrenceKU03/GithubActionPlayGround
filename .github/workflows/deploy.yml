@@ -1,0 +1,21 @@
+name: Deploy 
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  checkout:
+    runs-on:ubuntu-latest
+    steps:
+      - uses:actions/checkout@v4
+
+      - name:Clone Repo
+        run: | echo "Cloned Repo"
+
+
+
+       
+
