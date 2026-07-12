@@ -11,11 +11,16 @@ env:
 jobs:
   checkout:
     runs-on: ubuntu-latest
+    outputs:
+      bucket_output: ${{ steps.bucket.outputs.bucket }}
     steps:
       - uses: actions/checkout@v4
       - name: Clone Repo
+        id: bucket
         run: |
           echo "Cloned Repo"
+          echo "bucket=YO bigg dawg" >> "$GITHUB_OUTPUT"
+
 
   testing_types:
      runs-on: ubuntu-latest
@@ -26,6 +31,7 @@ jobs:
        - name: Testing
          run: |
            echo "DONE $WORKFLOW_ENV"
+           echo "${{ needs.checkout.outputs.bucket_output}}"
 
   third_job:
     runs-on: ubuntu-latest
