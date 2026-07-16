@@ -4,37 +4,9 @@ on:
   push:
     branches:
       - main
-
-env:
-  WORKFLOW_ENV: hello_world
-
-jobs:
-  Create-Artifact:
-    name: Artifact-Producer
-    runs-on: ubuntu-latest
-    steps:
-      - name: Creating the Artifact
-        run: echo "Testing artifacts" >> artifact.txt
-
-      - name: Upload-Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-artifact
-          path: artifact.txt
-
-  Download-Artifact:
-    name: Artifact-Downloader
-    needs:  Create-Artifact
-    runs-on: ubuntu-latest
-    steps:
-      - name: Downloading-Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: test-artifact
-
-      - name: Cat Artifact
-        run: cat artifact.txt
-
-        
        
-
+jobs:
+  Try-Caching:
+     name: Try-Try-Caching
+     runs-on: actions/cache@v4
+     
