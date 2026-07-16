@@ -9,41 +9,31 @@ env:
   WORKFLOW_ENV: hello_world
 
 jobs:
-  checkout:
+  Create-Artifact:
+    name: Artifact-Producer
     runs-on: ubuntu-latest
-    outputs:
-      bucket_output: ${{ steps.bucket.outputs.bucket }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Clone Repo
-        id: bucket
-        run: |
-          echo "Cloned Repo"
-          echo "bucket=YO bigg dawg" >> "$GITHUB_OUTPUT"
+      - name: Creating the Artifact
+        run: | echo "Testing artifacts" >> artifacts.txt
 
+      - name: Upload-Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifact
+          path: artifact.txt
 
-  testing_types:
-     runs-on: ubuntu-latest
-     needs:
-       - checkout
-
-     steps:
-       - name: Testing
-         run: |
-           echo "DONE $WORKFLOW_ENV"
-           echo "${{ needs.checkout.outputs.bucket_output}}"
-
-  third_job:
+  Download-Artifact:
+    name: Artifact-Downloader
     runs-on: ubuntu-latest
-    needs:
-      - testing_types
     steps:
-      - name: step 1 within job 3
-        run: |
-          echo "Testing Things"
+      - name: Download-Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: test-artifact
 
+      - name: Cat Artifact
+        run: cat artifact.txt
 
-
-
+        
        
 
